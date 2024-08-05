@@ -25,6 +25,9 @@ const PostGenerator = ({ historicalPosts }) => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+      if (!data || !data.choices || !data.choices[0] || !data.choices[0].message) {
+        throw new Error('Unexpected response format from LLM API');
+      }
       return data.choices[0].message.content;
     },
     onSuccess: (data) => {
@@ -32,7 +35,7 @@ const PostGenerator = ({ historicalPosts }) => {
     },
     onError: (error) => {
       console.error('Error generating post:', error);
-      setGeneratedPost('Error generating post. Please try again.');
+      setGeneratedPost('Error generating post. Please try again. Details: ' + error.message);
     },
   });
 
