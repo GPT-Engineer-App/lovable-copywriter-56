@@ -26,6 +26,7 @@ const PostGenerator = ({ historicalPosts }) => {
       }
       const data = await response.json();
       if (!data || !data.choices || !data.choices[0] || !data.choices[0].message) {
+        console.error('Unexpected API response:', data);
         throw new Error('Unexpected response format from LLM API');
       }
       return data.choices[0].message.content;
@@ -35,16 +36,23 @@ const PostGenerator = ({ historicalPosts }) => {
     },
     onError: (error) => {
       console.error('Error generating post:', error);
-      setGeneratedPost('Error generating post. Please try again. Details: ' + error.message);
+      setGeneratedPost(`Error generating post. Please try again. Details: ${error.message}\n\nIf this error persists, please contact support.`);
     },
   });
+
+  const handleError = (error) => {
+    console.error('Detailed error:', error);
+    setGeneratedPost(`An error occurred: ${error.message}\n\nPlease try again or contact support if the issue persists.`);
+  };
 
   const generatePost = () => {
     const historicalContent = historicalPosts.map(post => `${post.title}\n${post.content}`).join('\n\n');
     const systemPrompt = "Read the historical posts and based on that write or rewrite posts that the user asks for:\n\n";
     const fullPrompt = `${systemPrompt}${historicalContent}\n\nWrite a post about: ${prompt}`;
     
-    generatePostMutation.mutate(fullPrompt);
+    generatePostMutation.mutate(fullPrompt, {
+      onError: handleError
+    });
   };
 
   return (
