@@ -22,7 +22,7 @@ const Index = () => {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Generate New Post</CardTitle>
+            <CardTitle>Generate/Rewrite Post</CardTitle>
           </CardHeader>
           <CardContent>
             <PostGenerator historicalPosts={historicalPosts || []} />
