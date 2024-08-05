@@ -1,12 +1,12 @@
 // Update this page (the content is just a fallback if you fail to update the page)
 
-import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import HistoricalPosts from '../components/HistoricalPosts';
 import PostGenerator from '../components/PostGenerator';
+import { useHistoricalPosts } from '../integrations/supabase';
 
 const Index = () => {
-  const [historicalPosts, setHistoricalPosts] = useState([]);
+  const { data: historicalPosts } = useHistoricalPosts();
 
   return (
     <div className="min-h-screen p-8 bg-gray-100">
@@ -16,7 +16,7 @@ const Index = () => {
             <CardTitle>Historical Posts</CardTitle>
           </CardHeader>
           <CardContent>
-            <HistoricalPosts posts={historicalPosts} setPosts={setHistoricalPosts} />
+            <HistoricalPosts />
           </CardContent>
         </Card>
         <Card>
@@ -24,7 +24,7 @@ const Index = () => {
             <CardTitle>Generate New Post</CardTitle>
           </CardHeader>
           <CardContent>
-            <PostGenerator historicalPosts={historicalPosts} />
+            <PostGenerator historicalPosts={historicalPosts || []} />
           </CardContent>
         </Card>
       </div>
