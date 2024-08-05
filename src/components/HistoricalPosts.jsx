@@ -32,7 +32,7 @@ const HistoricalPosts = () => {
       {posts.map((post) => (
         <div key={post.id} className="bg-white p-4 rounded-lg shadow">
           <h3 className="font-bold">{post.title}</h3>
-          <p className="mt-2">{post.content}</p>
+          <p className="mt-2 whitespace-pre-wrap">{post.content}</p>
           <Button variant="destructive" size="sm" onClick={() => removePost(post.id)} className="mt-2">
             Remove
           </Button>
