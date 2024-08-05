@@ -25,18 +25,18 @@ const PostGenerator = ({ historicalPosts }) => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      if (!data || !data.choices || !data.choices[0] || !data.choices[0].message) {
+      if (!data || !data.content || !data.content[0] || !data.content[0].text) {
         console.error('Unexpected API response:', data);
         throw new Error('Unexpected response format from LLM API');
       }
-      return data.choices[0].message.content;
+      return data.content[0].text;
     },
     onSuccess: (data) => {
       setGeneratedPost(data);
     },
     onError: (error) => {
       console.error('Error generating post:', error);
-      setGeneratedPost(`Error generating post. Please try again. Details: ${error.message}\n\nIf this error persists, please contact support.`);
+      setGeneratedPost(`Error generating post. Please try again. Details: ${error.message}\n\nResponse data: ${JSON.stringify(error.response?.data)}\n\nIf this error persists, please contact support.`);
     },
   });
 
