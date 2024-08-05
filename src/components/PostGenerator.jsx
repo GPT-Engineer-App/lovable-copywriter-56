@@ -48,7 +48,7 @@ const PostGenerator = ({ historicalPosts }) => {
   const generatePost = () => {
     const historicalContent = historicalPosts.map(post => `${post.title}\n${post.content}`).join('\n\n');
     const systemPrompt = "Read the historical posts and based on that write or rewrite posts that the user asks for:\n\n";
-    const fullPrompt = `${systemPrompt}${historicalContent}\n\nWrite a post about: ${prompt}`;
+    const fullPrompt = `${systemPrompt}${historicalContent}\n\nUser request: ${prompt}`;
     
     generatePostMutation.mutate(fullPrompt, {
       onError: handleError
