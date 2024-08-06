@@ -36,23 +36,16 @@ const PostGenerator = ({ historicalPosts }) => {
     },
     onError: (error) => {
       console.error('Error generating post:', error);
-      setGeneratedPost(`Error generating post. Please try again. Details: ${error.message}\n\nResponse data: ${JSON.stringify(error.response?.data)}\n\nIf this error persists, please contact support.`);
+      setGeneratedPost(`Error generating post. Please try again. If this error persists, please contact support.`);
     },
   });
-
-  const handleError = (error) => {
-    console.error('Detailed error:', error);
-    setGeneratedPost(`An error occurred: ${error.message}\n\nPlease try again or contact support if the issue persists.`);
-  };
 
   const generatePost = () => {
     const historicalContent = historicalPosts.map(post => `${post.title}\n${post.content}`).join('\n\n');
     const systemPrompt = "Read the historical posts and based on that write or rewrite posts that the user asks for:\n\n";
     const fullPrompt = `${systemPrompt}${historicalContent}\n\nUser request: ${prompt}`;
     
-    generatePostMutation.mutate(fullPrompt, {
-      onError: handleError
-    });
+    generatePostMutation.mutate(fullPrompt);
   };
 
   return (
