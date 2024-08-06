@@ -26,6 +26,7 @@ const fromSupabase = async (query) => {
 | id         | uuid                     | string | true     |
 | title      | text                     | string | true     |
 | content    | text                     | string | true     |
+| category   | text                     | string | true     |
 | created_at | timestamp with time zone | string | false    |
 
 */
