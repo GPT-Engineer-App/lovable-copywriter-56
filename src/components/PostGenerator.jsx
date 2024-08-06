@@ -42,7 +42,7 @@ const PostGenerator = ({ historicalPosts }) => {
 
   const generatePost = () => {
     const historicalContent = historicalPosts.map(post => `${post.title}\n${post.content}`).join('\n\n');
-    const systemPrompt = "Read the historical posts and based on that write or rewrite posts that the user asks for:\n\n";
+    const systemPrompt = "Read the historical posts and based on that write or rewrite posts that the user asks for. Don't use hashtags, keep it modern and non-salesy:\n\n";
     const fullPrompt = `${systemPrompt}${historicalContent}\n\nUser request: ${prompt}`;
     
     generatePostMutation.mutate(fullPrompt);
